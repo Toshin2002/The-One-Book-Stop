@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>User Page</title>
+</head>
+<body>
+    {% if user_data['msg']!="" %}
+    <p>*{{ user_data['msg'] }}</p>
+    {% endif %}
+
+    <h1>Welcome {{ user_data['user'].uname }} !</h1>
+    
+    <h1>Currently issued books</h1>
+    {% for book in user_data['issued_books'] %}
+    <h4>{{ book.Name }}</h4> <p>Accessible till {{book.ReturnDate}}</p><p><a href="/{{user_data['user'].ID}}/{{book.ID}}/return">Return</a></p>
+    {% endfor %}
+
+    <h2>You Can only Issue 5 books at a time !</h2>
+
+    <!-- <h1>Top Available Books</h1>
+
+    {% for book in user_data['av_books'] %}
+    <h4>{{book.Name}}  <a href="/{{user_data['user'].ID}}/books/{{book.ID}}/request">Request Issue</a></h4>
+    {% endfor %} -->
+
+
+    <h1>Search by sections</h1>
+    <form action="/sectional_user_view" method="post">
+        <label for="Section">Enter Section name</label>
+        <input type="text" name="section" id="">
+        <button type="submit">Search</button>
+    </form>
+
+    <form action="/{{user_data['user'].ID}}/library" method="get">
+        <button type="submit"><h1>Browse Library</h1></button>
+    </form>
+
+    <h1>Give Feedback</h1>
+    <form action="/{{user_data['user'].ID}}/feedback" method="post">
+        <label for="bookID">Enter bookID : </label>
+        <input type="text" name="bookID" id="">
+        <label for="feedback">Feedback : </label>
+        <input type="text" name="feedback" id="">
+        <button type="submit">Submit</button>
+    </form>
+
+    <button><a href="/login">Go Back</a></button>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
